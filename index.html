@@ -30,11 +30,11 @@ body {
 .container {
     width: 100%;
     max-width: 400px;
-    z-index: 10;
+    z-index: 20; /* Aumentado para garantir clique no Edge */
     text-align: center;
+    position: relative;
 }
 
-/* Letras e espaços preservados exatamente como solicitado */
 .instruction {
     font-size: 13px;
     text-transform: uppercase;
@@ -44,7 +44,6 @@ body {
     transition: 0.5s;
 }
 
-/* CENA DO CADEADO */
 .lock-scene {
     width: 200px;
     height: 220px;
@@ -62,29 +61,22 @@ body {
     transition: all 1s ease-in-out 0.8s;
 }
 
-/* HASTE - Corrigida para arredondamento total sem quebrar o estilo */
+/* HASTE ARREDONDADA - CSS STANDARD PARA EDGE/CHROME */
 .lock-shackle {
     position: absolute;
     top: -55px;
     left: 18px;
     width: 94px;
     height: 100px;
-    /* Substituído border-image por border sólido + cor para permitir o raio */
-    border-left: 14px solid #666;
-    border-top: 14px solid #888;
-    border-right: 14px solid #666;
+    border: 14px solid #888;
     border-bottom: none;
-    
-    /* Arredondamento forçado da trava */
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
-    
     z-index: 1;
     transform-origin: 15% 100%;
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* CORPO DO CADEADO */
 .lock-body {
     position: absolute;
     width: 130px;
@@ -104,10 +96,8 @@ body {
     height: 35px;
     background: #000;
     border-radius: 11px 11px 4px 4px;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,0.8);
 }
 
-/* ANIMAÇÕES */
 .unlocked .lock-shackle { transform: translateY(-25px); }
 .unlocked .lock-shackle.rotate { transform: translateY(-25px) rotate(-45deg); }
 .unlocked .lock-container.fade-out {
@@ -116,7 +106,6 @@ body {
     filter: blur(15px);
 }
 
-/* ÁREA DE CELEBRAÇÃO - Tipografia original preservada */
 #celebrationArea {
     position: absolute;
     inset: 0;
@@ -135,7 +124,6 @@ body {
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
     letter-spacing: 2px;
-    filter: drop-shadow(0 0 10px rgba(191, 149, 63, 0.5));
 }
 
 .title {
@@ -145,7 +133,6 @@ body {
     color: white;
 }
 
-/* BOTÃO - Tipografia original preservada */
 button {
     margin-top: 60px;
     background: transparent;
@@ -159,7 +146,8 @@ button {
     border-radius: 50px;
     animation: pulse 2s infinite;
     transition: 0.4s;
-    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    z-index: 100; /* Força o botão a estar sempre no topo */
 }
 
 button:hover {
@@ -168,18 +156,18 @@ button:hover {
 }
 
 @keyframes pulse {
-    0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(191, 149, 63, 0.4); }
+    0% { transform: scale(0.98); }
     70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(191, 149, 63, 0); }
     100% { transform: scale(0.98); }
 }
 
-.hide { opacity: 0; pointer-events: none; }
+.hide { display: none; }
 
 canvas {
     position: fixed;
     top: 0; left: 0;
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; /* Garante que os fogos não bloqueiem o clique */
+    z-index: 1;
 }
 </style>
 </head>
@@ -215,7 +203,7 @@ function unlock() {
     const lockGroup = document.getElementById("lockGroup");
     const instr = document.getElementById("instr");
     
-    btn.classList.add("hide");
+    btn.style.display = "none";
     instr.style.opacity = "0";
     document.getElementById("scene").classList.add("unlocked");
 
@@ -226,7 +214,13 @@ function unlock() {
         document.getElementById("celebrationArea").style.display = "flex";
         startTyping();
     }, 1500);
-setTimeout(() => { window.location.href = "https://odia.ig.com.br/"; }, 6000);
+
+    // Link do Google Photos com tempo ajustado
+    setTimeout(() => { 
+        window.location.href = "https://photos.app.goo.gl/EkPjM5nmBaV5DwbJ8"; 
+    }, 6500);
+}
+
 function startTyping() {
     const nStr = "Parabéns, Matheus!";
     const sStr = "Campeão";
