@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Matheus Campeão - Classic Gold</title>
+<title>Matheus Campeão - Final</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -13,7 +13,7 @@
     --dark-bg: #05070a;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
     margin: 0;
@@ -30,9 +30,9 @@ body {
 .container {
     width: 100%;
     max-width: 400px;
-    z-index: 20; /* Aumentado para garantir clique no Edge */
-    text-align: center;
     position: relative;
+    z-index: 10;
+    text-align: center;
 }
 
 .instruction {
@@ -41,7 +41,6 @@ body {
     letter-spacing: 3px;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 40px;
-    transition: 0.5s;
 }
 
 .lock-scene {
@@ -52,6 +51,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none; /* Garante que o cadeado não intercepte o clique do botão */
 }
 
 .lock-container {
@@ -61,7 +61,7 @@ body {
     transition: all 1s ease-in-out 0.8s;
 }
 
-/* HASTE ARREDONDADA - CSS STANDARD PARA EDGE/CHROME */
+/* HASTE ARREDONDADA */
 .lock-shackle {
     position: absolute;
     top: -55px;
@@ -70,8 +70,7 @@ body {
     height: 100px;
     border: 14px solid #888;
     border-bottom: none;
-    border-top-left-radius: 50px;
-    border-top-right-radius: 50px;
+    border-radius: 50px 50px 0 0;
     z-index: 1;
     transform-origin: 15% 100%;
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -84,11 +83,10 @@ body {
     background: var(--gold-gradient);
     border-radius: 15px;
     z-index: 2;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7), inset 0 0 15px rgba(255,255,255,0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .keyhole-container {
@@ -98,13 +96,10 @@ body {
     border-radius: 11px 11px 4px 4px;
 }
 
+/* ANIMAÇÕES */
 .unlocked .lock-shackle { transform: translateY(-25px); }
 .unlocked .lock-shackle.rotate { transform: translateY(-25px) rotate(-45deg); }
-.unlocked .lock-container.fade-out {
-    opacity: 0;
-    transform: scale(0.8);
-    filter: blur(15px);
-}
+.unlocked .lock-container.fade-out { opacity: 0; transform: scale(0.8); filter: blur(15px); }
 
 #celebrationArea {
     position: absolute;
@@ -113,7 +108,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 5;
 }
 
 .name {
@@ -130,9 +124,9 @@ body {
     font-size: 16px;
     letter-spacing: 8px;
     margin-top: 10px;
-    color: white;
 }
 
+/* BOTÃO CORRIGIDO PARA CHROME */
 button {
     margin-top: 60px;
     background: transparent;
@@ -144,10 +138,12 @@ button {
     letter-spacing: 3px;
     cursor: pointer;
     border-radius: 50px;
-    animation: pulse 2s infinite;
-    transition: 0.4s;
     position: relative;
-    z-index: 100; /* Força o botão a estar sempre no topo */
+    z-index: 999; /* Máxima prioridade */
+    animation: pulse 2s infinite;
+    transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    display: inline-block;
 }
 
 button:hover {
@@ -161,17 +157,14 @@ button:hover {
     100% { transform: scale(0.98); }
 }
 
-.hide { display: none; }
-
 canvas {
     position: fixed;
     top: 0; left: 0;
-    pointer-events: none; /* Garante que os fogos não bloqueiem o clique */
+    pointer-events: none;
     z-index: 1;
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -184,7 +177,6 @@ canvas {
                 <div class="keyhole-container"></div>
             </div>
         </div>
-
         <div id="celebrationArea">
             <p class="name" id="nameText"></p>
             <p class="title" id="subText"></p>
@@ -198,13 +190,13 @@ canvas {
 
 <script>
 function unlock() {
-    const btn = document.getElementById("btn");
+    // Esconde o botão e instrução imediatamente
+    document.getElementById("btn").style.pointerEvents = "none";
+    document.getElementById("btn").style.opacity = "0";
+    document.getElementById("instr").style.opacity = "0";
+    
     const shackle = document.getElementById("shackle");
     const lockGroup = document.getElementById("lockGroup");
-    const instr = document.getElementById("instr");
-    
-    btn.style.display = "none";
-    instr.style.opacity = "0";
     document.getElementById("scene").classList.add("unlocked");
 
     setTimeout(() => { shackle.classList.add("rotate"); }, 500);
@@ -215,7 +207,7 @@ function unlock() {
         startTyping();
     }, 1500);
 
-    // Link do Google Photos com tempo ajustado
+    // Redirecionamento para o Google Photos [cite: 32]
     setTimeout(() => { 
         window.location.href = "https://photos.app.goo.gl/X2BrCCSC49GabLsU9"; 
     }, 6500);
