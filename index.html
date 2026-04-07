@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Matheus Campeão - Final</title>
+<title>Matheus Campeão - Elite Gold</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 
@@ -41,8 +41,10 @@ body {
     letter-spacing: 3px;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 40px;
+    transition: opacity 0.5s;
 }
 
+/* CENA DO CADEADO */
 .lock-scene {
     width: 200px;
     height: 220px;
@@ -51,7 +53,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none; /* Garante que o cadeado não intercepte o clique do botão */
+    pointer-events: none;
 }
 
 .lock-container {
@@ -96,7 +98,7 @@ body {
     border-radius: 11px 11px 4px 4px;
 }
 
-/* ANIMAÇÕES */
+/* ANIMAÇÕES DE DESBLOQUEIO */
 .unlocked .lock-shackle { transform: translateY(-25px); }
 .unlocked .lock-shackle.rotate { transform: translateY(-25px) rotate(-45deg); }
 .unlocked .lock-container.fade-out { opacity: 0; transform: scale(0.8); filter: blur(15px); }
@@ -126,7 +128,7 @@ body {
     margin-top: 10px;
 }
 
-/* BOTÃO CORRIGIDO PARA CHROME */
+/* BOTÃO COM AURA PULSANTE REFORÇADA */
 button {
     margin-top: 60px;
     background: transparent;
@@ -139,22 +141,33 @@ button {
     cursor: pointer;
     border-radius: 50px;
     position: relative;
-    z-index: 999; /* Máxima prioridade */
-    animation: pulse 2s infinite;
+    z-index: 999;
+    animation: pulseAura 1.5s infinite;
     transition: 0.3s;
     font-family: 'Montserrat', sans-serif;
     display: inline-block;
+    outline: none;
 }
 
 button:hover {
     background: var(--gold-gradient);
     color: #000;
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.8);
 }
 
-@keyframes pulse {
-    0% { transform: scale(0.98); }
-    70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(191, 149, 63, 0); }
-    100% { transform: scale(0.98); }
+@keyframes pulseAura {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(191, 149, 63, 0.7), 0 0 0 0 rgba(191, 149, 63, 0.4);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(191, 149, 63, 0), 0 0 0 30px rgba(191, 149, 63, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(191, 149, 63, 0), 0 0 0 0 rgba(191, 149, 63, 0);
+    }
 }
 
 canvas {
@@ -190,13 +203,14 @@ canvas {
 
 <script>
 function unlock() {
-    // Esconde o botão e instrução imediatamente
-    document.getElementById("btn").style.pointerEvents = "none";
-    document.getElementById("btn").style.opacity = "0";
-    document.getElementById("instr").style.opacity = "0";
-    
+    const btn = document.getElementById("btn");
+    const instr = document.getElementById("instr");
     const shackle = document.getElementById("shackle");
     const lockGroup = document.getElementById("lockGroup");
+    
+    btn.style.opacity = "0";
+    btn.style.pointerEvents = "none";
+    instr.style.opacity = "0";
     document.getElementById("scene").classList.add("unlocked");
 
     setTimeout(() => { shackle.classList.add("rotate"); }, 500);
@@ -207,10 +221,10 @@ function unlock() {
         startTyping();
     }, 1500);
 
-    // Redirecionamento para o Google Photos [cite: 32]
+    // REDIRECIONAMENTO CORRIGIDO PARA GOOGLE PHOTOS [cite: 32]
     setTimeout(() => { 
         window.location.href = "https://photos.app.goo.gl/X2BrCCSC49GabLsU9"; 
-    }, 5000);
+    }, 6500);
 }
 
 function startTyping() {
@@ -271,6 +285,11 @@ function draw() {
     });
     requestAnimationFrame(draw);
 }
+
+window.onresize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+};
 </script>
 </body>
 </html>
