@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Matheus Campeão - Elite Gold</title>
+<meta name="color-scheme" content="dark only">
+<title>Matheus Campeão - Estabilidade Total</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 :root {
-    --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fff9c4 25%, #ffcc00 50%, #b8860b 75%, #ffd700 100%);
     --dark-bg: #05070a;
 }
 
@@ -17,7 +18,7 @@
 
 body {
     margin: 0;
-    background: var(--dark-bg);
+    background-color: var(--dark-bg) !important;
     font-family: 'Montserrat', sans-serif;
     color: white;
     display: flex;
@@ -31,64 +32,72 @@ body {
     width: 100%;
     max-width: 400px;
     position: relative;
-    z-index: 10;
+    z-index: 20;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .instruction {
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 40px;
-    transition: opacity 0.5s;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 50px;
+    height: 20px;
+    transition: opacity 0.3s;
 }
 
-/* CENA DO CADEADO */
+/* CENA DO CADEADO - ALTURA RIGIDA PARA EVITAR PULO */
 .lock-scene {
-    width: 200px;
-    height: 220px;
-    margin: 0 auto;
+    width: 150px;
+    height: 180px; 
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
+    margin-bottom: 20px;
 }
 
 .lock-container {
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 10px;
     width: 130px;
     height: 110px;
-    transition: all 1s ease-in-out 0.8s;
+    transition: all 0.8s ease-in-out;
 }
 
-/* HASTE ARREDONDADA */
+/* HASTE - POSIÇÃO FIXA EM RELAÇÃO AO CORPO */
 .lock-shackle {
     position: absolute;
-    top: -55px;
+    top: -50px;
     left: 18px;
     width: 94px;
-    height: 100px;
-    border: 14px solid #888;
+    height: 90px;
+    border: 14px solid #999; 
     border-bottom: none;
     border-radius: 50px 50px 0 0;
     z-index: 1;
+    transform: translateY(0) rotate(0deg); 
     transform-origin: 15% 100%;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .lock-body {
     position: absolute;
+    bottom: 0;
+    left: 0;
     width: 130px;
     height: 110px;
-    background: var(--gold-gradient);
+    background: var(--gold-gradient) !important;
     border-radius: 15px;
-    z-index: 2;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+    z-index: 5;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.9);
     display: flex;
     justify-content: center;
     align-items: center;
+    filter: saturate(1.7) contrast(1.1);
+    -webkit-filter: saturate(1.7) contrast(1.1);
+    transform: translateZ(0);
 }
 
 .keyhole-container {
@@ -98,84 +107,62 @@ body {
     border-radius: 11px 11px 4px 4px;
 }
 
-/* ANIMAÇÕES DE DESBLOQUEIO */
+/* ANIMAÇÕES */
 .unlocked .lock-shackle { transform: translateY(-25px); }
-.unlocked .lock-shackle.rotate { transform: translateY(-25px) rotate(-45deg); }
-.unlocked .lock-container.fade-out { opacity: 0; transform: scale(0.8); filter: blur(15px); }
+.unlocked .shackle-rotate { transform: translateY(-25px) rotate(-45deg); }
+.lock-container.fade-out { opacity: 0; transform: scale(0.8); filter: blur(10px); }
 
 #celebrationArea {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 30;
 }
 
 .name {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 900;
     background: var(--gold-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    margin: 0;
 }
 
 .title {
-    font-size: 16px;
-    letter-spacing: 8px;
+    font-size: 26px;
+    letter-spacing: 6px;
     margin-top: 10px;
 }
 
-/* BOTÃO COM AURA PULSANTE REFORÇADA */
 button {
-    margin-top: 60px;
+    margin-top: 40px;
     background: transparent;
-    border: 2px solid #bf953f;
-    padding: 18px 50px;
-    color: #bf953f;
+    border: 2px solid #ffcc00;
+    padding: 16px 45px;
+    color: #ffcc00;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     cursor: pointer;
     border-radius: 50px;
-    position: relative;
-    z-index: 999;
     animation: pulseAura 1.5s infinite;
-    transition: 0.3s;
-    font-family: 'Montserrat', sans-serif;
-    display: inline-block;
-    outline: none;
-}
-
-button:hover {
-    background: var(--gold-gradient);
-    color: #000;
-    box-shadow: 0 0 30px rgba(191, 149, 63, 0.8);
+    transition: opacity 0.3s;
 }
 
 @keyframes pulseAura {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(191, 149, 63, 0.7), 0 0 0 0 rgba(191, 149, 63, 0.4);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 15px rgba(191, 149, 63, 0), 0 0 0 30px rgba(191, 149, 63, 0);
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(191, 149, 63, 0), 0 0 0 0 rgba(191, 149, 63, 0);
-    }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(255, 204, 0, 0); }
+    100% { transform: scale(0.95); }
 }
 
-canvas {
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 1;
-}
+canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 1; }
 </style>
 </head>
 <body>
@@ -190,6 +177,7 @@ canvas {
                 <div class="keyhole-container"></div>
             </div>
         </div>
+        
         <div id="celebrationArea">
             <p class="name" id="nameText"></p>
             <p class="title" id="subText"></p>
@@ -207,21 +195,27 @@ function unlock() {
     const instr = document.getElementById("instr");
     const shackle = document.getElementById("shackle");
     const lockGroup = document.getElementById("lockGroup");
-    
+    const scene = document.getElementById("scene");
+
+    // Mantém o espaço ocupado para evitar saltos de layout
     btn.style.opacity = "0";
     btn.style.pointerEvents = "none";
     instr.style.opacity = "0";
-    document.getElementById("scene").classList.add("unlocked");
 
-    setTimeout(() => { shackle.classList.add("rotate"); }, 500);
+    scene.classList.add("unlocked");
+
+    setTimeout(() => {
+        shackle.classList.add("shackle-rotate");
+    }, 500);
 
     setTimeout(() => {
         lockGroup.classList.add("fade-out");
-        document.getElementById("celebrationArea").style.display = "flex";
-        startTyping();
-    }, 1500);
+        setTimeout(() => {
+            document.getElementById("celebrationArea").style.display = "flex";
+            startTyping();
+        }, 300);
+    }, 1300);
 
-    // REDIRECIONAMENTO CORRIGIDO PARA GOOGLE PHOTOS [cite: 32]
     setTimeout(() => { 
         window.location.href = "https://photos.app.goo.gl/X2BrCCSC49GabLsU9"; 
     }, 6500);
@@ -231,17 +225,16 @@ function startTyping() {
     const nStr = "Parabéns, Matheus!";
     const sStr = "Campeão";
     let n = 0, s = 0;
-
     function typeN() {
         if (n < nStr.length) {
             document.getElementById("nameText").innerHTML += nStr.charAt(n);
-            n++; setTimeout(typeN, 80);
+            n++; setTimeout(typeN, 70);
         } else { typeS(); }
     }
     function typeS() {
         if (s < sStr.length) {
             document.getElementById("subText").innerHTML += sStr.charAt(s);
-            s++; setTimeout(typeS, 100);
+            s++; setTimeout(typeS, 90);
         } else { initFireworks(); }
     }
     typeN();
@@ -250,29 +243,18 @@ function startTyping() {
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 let particles = [];
-
 function initFireworks() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    setInterval(() => {
-        createExplosion(Math.random() * canvas.width, Math.random() * canvas.height * 0.4);
-    }, 400);
+    setInterval(() => { createExplosion(Math.random() * canvas.width, Math.random() * canvas.height * 0.4); }, 400);
     draw();
 }
-
 function createExplosion(x, y) {
-    const colors = ["#bf953f", "#fcf6ba", "#ffffff", "#d4af37"];
+    const colors = ["#ffcc00", "#fff9c4", "#ffffff", "#b8860b"];
     for (let i = 0; i < 40; i++) {
-        particles.push({
-            x, y,
-            vx: (Math.random() - 0.5) * 12,
-            vy: (Math.random() - 0.5) * 12,
-            life: 1,
-            color: colors[Math.floor(Math.random() * colors.length)]
-        });
+        particles.push({ x, y, vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12, life: 1, color: colors[Math.floor(Math.random() * colors.length)] });
     }
 }
-
 function draw() {
     ctx.fillStyle = "rgba(5, 7, 10, 0.25)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -285,11 +267,6 @@ function draw() {
     });
     requestAnimationFrame(draw);
 }
-
-window.onresize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-};
 </script>
 </body>
 </html>
