@@ -131,14 +131,19 @@ body {
     background: var(--gold-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-transform: uppercase;
+    text-transform: none;
     margin: 0;
 }
 
 .title {
     font-size: 23px;
-    letter-spacing: 6px;
-    margin-top: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    white-space: nowrap;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 button {
@@ -197,7 +202,6 @@ function unlock() {
     const lockGroup = document.getElementById("lockGroup");
     const scene = document.getElementById("scene");
 
-    // Mantém o espaço ocupado para evitar saltos de layout
     btn.style.opacity = "0";
     btn.style.pointerEvents = "none";
     instr.style.opacity = "0";
@@ -222,8 +226,8 @@ function unlock() {
 }
 
 function startTyping() {
-    const nStr = "Parabéns, Adm. Matheus!";
-    const sStr = "";
+    const nStr = "Parabéns,";
+    const sStr = "Adm. Matheus!";
     let n = 0, s = 0;
     function typeN() {
         if (n < nStr.length) {
